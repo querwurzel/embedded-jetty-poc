@@ -1,9 +1,17 @@
-FROM openjdk:13-alpine
+FROM eclipse-temurin:17-jdk
 
-WORKDIR /
+RUN mkdir -p /tmp/project
 
-COPY build/libs/jettyheroku.jar /root/jettyheroku.jar
+WORKDIR /tmp/project
 
-EXPOSE 8888
+COPY . /tmp/project/
+
+RUN /tmp/project/gradlew clean build
+
+FROM eclipse-temurin:17-jre
+
+COPY --from=0 /tmp/project/build/libs/*.jar /root/
+
+EXPOSE $PORT
 
 ENTRYPOINT ["java", "-jar", "/root/jettyheroku.jar"]
