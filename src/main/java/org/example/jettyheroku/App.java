@@ -27,6 +27,8 @@ public class App {
         });
 
         final String port = System.getenv().getOrDefault("PORT", "8888");
+        System.out.println("Server listening on port " + port);
+
         final Server server = new Server(Integer.parseInt(port));
         server.setHandler(context);
         server.start();
