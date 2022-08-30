@@ -21,13 +21,12 @@ repositories {
 }
 
 dependencies {
-    testImplementation("junit:junit:4.12")
+    testImplementation("junit:junit:4.13.2")
 
-    implementation("org.eclipse.jetty:jetty-server:9.4.26.v20200117")
+    implementation("org.eclipse.jetty:jetty-server:11.0.11")
 }
 
 application {
-    // Define the main class for the application.
     mainClassName = "org.example.jettyheroku.App"
 }
 
@@ -35,6 +34,8 @@ tasks.withType<Jar> {
     manifest {
         attributes["Main-Class"] = "${application.mainClassName}"
     }
+
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 
     from(sourceSets.main.get().output)
     dependsOn(configurations.runtimeClasspath)
